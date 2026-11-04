@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Green Planet | Khảo sát môi trường</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&display=swap');
+
+:root {
+  --green: #19734f;
+  --dark: #163d32;
+  --lime: #dbf78c;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  color: var(--dark);
+  font-family: "Be Vietnam Pro", Arial, sans-serif;
+  background: #f5f8ed;
+}
+
+button, input { font: inherit; }
+
+button, a, label { -webkit-tap-highlight-color: transparent; }
+
+button:focus-visible, a:focus-visible {
+  outline: 3px solid #eea337;
+  outline-offset: 5px;
+}
+
+.background {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: -1;
+  background:
+    radial-gradient(ellipse at 5% 10%, #d7edc5 0, transparent 40%),
+    radial-gradient(ellipse at 95% 65%, #d5eee5 0, transparent 40%),
+    #f5f8ed;
+}
+
+.background span {
+  position: absolute;
+  opacity: .16;
+  font-size: 55px;
+  animation: float 7s ease-in-out infinite;
+}
+
+.background span:nth-child(1) { top: 15%; left: 3%; }
+.background span:nth-child(2) { top: 45%; right: 2%; animation-delay: -3s; }
+.background span:nth-child(3) { top: 78%; left: 5%; animation-delay: -5s; }
+
+nav {
+  max-width: 1100px;
+  margin: auto;
+  padding: 25px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 900;
+  letter-spacing: -1px;
+  font-size: 22px;
+}
+
+.brand-icon {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  background: var(--green);
+  border-radius: 14px;
+  font-size: 25px;
+}
+
+.nav-tag {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 9px 15px;
+  border: 1px solid #c6d7b9;
+  border-radius: 30px;
+}
+
+.hero {
+  max-width: 1100px;
+  margin: 20px auto 0;
+  padding: 45px 45px 55px;
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 20px;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  border-radius: 35px;
+  background: #e2efcf;
+  border: 1px solid #d3e5bd;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 13px;
+  border-radius: 30px;
+  background: #ffffffa8;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.3px;
+}
+
+.dot {
+  width: 7px;
+  height: 7px;
+  background: #38a66a;
+  border-radius: 50%;
+  box-shadow: 0 0 0 5px #38a66a18;
+}
+
+h1 {
+  font-size: clamp(38px, 5.5vw, 66px);
+  line-height: 1.13;
+  letter-spacing: -3px;
+  margin: 24px 0 20px;
+}
+
+h1 span { color: var(--green); }
+
+.hero-copy {
+  max-width: 440px;
+  color: #53715a;
+  font-size: 14px;
+  line-height: 1.9;
+}
+
+.start {
+  display: inline-flex;
+  align-items: center;
+  gap: 22px;
+  margin-top: 16px;
+  padding: 15px 23px;
+  color: white;
+  background: var(--green);
+  border-radius: 14px;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 700;
+  box-shadow: 0 9px 20px #19734f25;
+  transition: transform .2s;
+}
+
+.start:hover { transform: translateY(-3px); }
+
+.hero-meta {
+  display: flex;
+  gap: 18px;
+  margin-top: 24px;
+  color: #61765d;
+  font-size: 11px;
+}
+
+/* Trái Đất và các sticker được vẽ trực tiếp trên trang */
+.planet-scene {
+  min-height: 350px;
+  position: relative;
+  display: grid;
+  place-items: center;
+}
+
+.planet-wrap {
+  position: relative;
+  width: 240px;
+  height: 240px;
+  animation: float 6s ease-in-out infinite;
+}
+
+.planet {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: 50%;
+  background: #6cc9e8;
+  box-shadow:
+    inset -25px -15px 35px #17668c60,
+    inset 12px 8px 25px #ffffff70,
+    0 25px 40px #345f4320;
+}
+
+.world-map {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 480px;
+  height: 240px;
+  animation: rotateMap 24s linear infinite;
+}
+
+.planet-shine {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  box-shadow: inset -24px -8px 30px #10476642;
+  background: radial-gradient(circle at 30% 25%, #ffffff35, transparent 60%);
+}
+
+.face {
+  position: absolute;
+  top: 112px;
+  left: 80px;
+  width: 80px;
+  height: 50px;
+}
+
+.eye {
+  position: absolute;
+  top: 0;
+  width: 9px;
+  height: 13px;
+  border-radius: 50%;
+  background: #173f3b;
+  animation: blink 5s infinite;
+}
+
+.eye:first-child { left: 10px; }
+.eye:nth-child(2) { right: 10px; }
+
+.smile {
+  position: absolute;
+  width: 25px;
+  height: 15px;
+  top: 17px;
+  left: 28px;
+  border: 3px solid #173f3b;
+  border-top: 0;
+  border-radius: 0 0 30px 30px;
+}
+
+.blush {
+  position: absolute;
+  top: 18px;
+  width: 19px;
+  height: 8px;
+  background: #ffac9d;
+  border-radius: 50%;
+  opacity: .8;
+}
+
+.blush.left { left: 0; }
+.blush.right { right: 0; }
+
+.orbit {
+  position: absolute;
+  width: 315px;
+  height: 315px;
+  border: 1px dashed #85aa7060;
+  border-radius: 50%;
+  transform: rotate(-20deg);
+}
+
+.sticker {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  width: 65px;
+  height: 65px;
+  border: 4px solid white;
+  border-radius: 20px;
+  background: #ffffffb8;
+  box-shadow: 0 8px 18px #28483115;
+  font-size: 36px;
+  animation: stickerFloat 5s ease-in-out infinite;
+}
+
+.sticker.one { top: 9px; right: 35px; transform: rotate(12deg); }
+.sticker.two { bottom: 10px; right: 30px; animation-delay: -2s; }
+.sticker.three { left: 0; top: 70px; animation-delay: -3.5s; }
+
+.cloud {
+  position: absolute;
+  width: 90px;
+  height: 28px;
+  background: #fff;
+  border-radius: 30px;
+  opacity: .85;
+  animation: cloudMove 8s ease-in-out infinite;
+}
+
+.cloud::before, .cloud::after {
+  content: "";
+  position: absolute;
+  background: inherit;
+  border-radius: 50%;
+}
+
+.cloud::before { width: 38px; height: 38px; left: 14px; top: -20px; }
+.cloud::after { width: 30px; height: 30px; right: 12px; top: -14px; }
+.cloud.c1 { left: 10px; bottom: 55px; }
+.cloud.c2 { right: 0; top: 100px; transform: scale(.7); animation-delay: -4s; }
+
+.planet-label {
+  position: absolute;
+  bottom: -6px;
+  left: 50%;
+  white-space: nowrap;
+  padding: 9px 17px;
+  border-radius: 25px;
+  font-size: 11px;
+  font-weight: 800;
+  background: #fff;
+  transform: translateX(-50%) rotate(-5deg);
+  box-shadow: 0 5px 15px #0000000a;
+}
+
+.content {
+  max-width: 820px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+.progress-panel {
+  position: sticky;
+  top: 12px;
+  z-index: 10;
+  background: #fffffff2;
+  backdrop-filter: blur(15px);
+  padding: 18px 22px;
+  border: 1px solid #e2e9db;
+  border-radius: 18px;
+  box-shadow: 0 8px 25px #24432b0b;
+  margin-bottom: 30px;
+}
+
+.progress-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+#progressCount { color: var(--green); }
+
+progress {
+  display: block;
+  appearance: none;
+  width: 100%;
+  height: 9px;
+  margin-top: 12px;
+  border: 0;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #edf1e7;
+}
+
+progress::-webkit-progress-bar { background: #edf1e7; }
+progress::-webkit-progress-value {
+  background: linear-gradient(90deg, #9bce60, #25845b);
+  border-radius: 10px;
+  transition: width .4s;
+}
+progress::-moz-progress-bar { background: #25845b; }
+
+.section-heading {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  margin-bottom: 24px;
+}
+
+.section-heading > span {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  background: #e5edcf;
+  border-radius: 14px;
+  font-size: 25px;
+}
+
+.section-heading h2 { margin: 0 0 5px; font-size: 20px; }
+.section-heading p { margin: 0; color: #758574; font-size: 12px; }
+
+.question {
+  min-width: 0;
+  position: relative;
+  margin: 0 0 22px;
+  padding: 25px;
+  background: #fff;
+  border: 1px solid #e2e9db;
+  border-radius: 22px;
+  box-shadow: 0 4px 0 #e6ecdf;
+  transition: border-color .25s, box-shadow .25s;
+}
+
+.question.answered {
+  border-color: #9acb9b;
+  box-shadow: 0 4px 0 #d5e9cf;
+}
+
+.question legend {
+  float: left;
+  width: 100%;
+  padding: 0;
+  margin-bottom: 21px;
+}
+
+.question legend + * { clear: both; }
+
+.question-top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.question-number {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 39px;
+  height: 39px;
+  background: #f0f5e7;
+  border-radius: 12px;
+  color: var(--green);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.question-title {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.7;
+}
+
+.question-icon {
+  display: block;
+  margin-left: auto;
+  font-size: 25px;
+  flex-shrink: 0;
+}
+
+.options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 11px;
+}
+
+.option {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 14px;
+  min-height: 64px;
+  cursor: pointer;
+  border: 1px solid #e4e9df;
+  border-radius: 12px;
+  background: #fcfdf9;
+  transition: transform .2s, background .2s, border-color .2s;
+}
+
+.option:hover {
+  transform: translateY(-2px);
+  border-color: #a6c78a;
+  background: #f5f9ec;
+}
+
+.option input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+}
+
+.option:has(input:focus-visible) {
+  outline: 3px solid #e8ad47;
+  outline-offset: 3px;
+}
+
+.letter {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  background: #edf1e6;
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 800;
+  color: #75846d;
+}
+
+.answer-text {
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.option:has(input:checked) {
+  background: #edf7e7;
+  border-color: #69a65e;
+}
+
+.option input:checked + .letter {
+  background: var(--green);
+  color: white;
+  animation: pop .25s ease;
+}
+
+.bottom-card {
+  text-align: center;
+  padding: 30px 24px;
+  border-radius: 22px;
+  background: #e6efda;
+}
+
+.bottom-card > span {
+  display: inline-block;
+  font-size: 37px;
+  animation: float 4s ease-in-out infinite;
+}
+
+.bottom-card h3 { margin: 10px 0; font-size: 18px; }
+.bottom-card p { color: #64765b; font-size: 12px; line-height: 1.8; }
+
+.submit {
+  width: 100%;
+  margin-top: 12px;
+  padding: 18px;
+  color: white;
+  background: var(--green);
+  border: 0;
+  border-radius: 13px;
+  cursor: pointer;
+  font-weight: 700;
+  box-shadow: 0 6px 0 #10563a;
+  transition: transform .2s, box-shadow .2s;
+}
+
+.submit:hover { transform: translateY(-2px); }
+.submit:active { transform: translateY(4px); box-shadow: 0 2px 0 #10563a; }
+
+.reset {
+  margin-top: 18px;
+  border: 0;
+  background: transparent;
+  color: #60775b;
+  cursor: pointer;
+  font-size: 12px;
+  text-decoration: underline;
+}
+
+.privacy {
+  text-align: center;
+  font-size: 11px;
+  color: #7c8a75;
+  line-height: 1.8;
+  margin-top: 20px;
+}
+
+footer {
+  padding: 0 20px 30px;
+  text-align: center;
+  font-size: 11px;
+  color: #718368;
+}
+
+dialog {
+  width: min(440px, calc(100% - 32px));
+  padding: 38px 25px;
+  text-align: center;
+  color: var(--dark);
+  background: #f8fbed;
+  border: 2px solid #d3e8be;
+  border-radius: 28px;
+  box-shadow: 0 30px 100px #12332340;
+}
+
+dialog::backdrop {
+  background: #103a2e80;
+  backdrop-filter: blur(6px);
+}
+
+.success-icon {
+  display: inline-block;
+  font-size: 75px;
+  animation: float 3s ease-in-out infinite;
+}
+
+dialog h2 { font-size: 26px; letter-spacing: -1px; }
+dialog p { font-size: 13px; line-height: 1.9; color: #64745a; }
+
+dialog button {
+  margin-top: 15px;
+  padding: 13px 25px;
+  border: 0;
+  border-radius: 12px;
+  background: var(--green);
+  color: white;
+  cursor: pointer;
+}
+
+.confetti {
+  position: fixed;
+  z-index: 100;
+  top: -20px;
+  width: 10px;
+  height: 16px;
+  pointer-events: none;
+  animation: fall 3s linear forwards;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-13px); }
+}
+
+@keyframes stickerFloat {
+  0%, 100% { translate: 0 0; rotate: -8deg; }
+  50% { translate: 0 -14px; rotate: 8deg; }
+}
+
+@keyframes rotateMap {
+  from { transform: translateX(0); }
+  to { transform: translateX(-240px); }
+}
+
+@keyframes cloudMove {
+  0%, 100% { translate: -8px 0; }
+  50% { translate: 12px 0; }
+}
+
+@keyframes blink {
+  0%, 43%, 47%, 100% { transform: scaleY(1); }
+  45% { transform: scaleY(.1); }
+}
+
+@keyframes pop {
+  50% { transform: scale(1.2); }
+}
+
+@keyframes fall {
+  to { transform: translateY(110vh) rotate(720deg); }
+}
+
+@media (max-width: 700px) {
+  nav { padding: 18px 20px; }
+  .nav-tag { font-size: 10px; padding: 8px 10px; }
+  .brand { font-size: 18px; }
+  .hero {
+    margin: 10px 15px 0;
+    padding: 30px 25px;
+    grid-template-columns: 1fr;
+    border-radius: 26px;
+  }
+  h1 { letter-spacing: -2px; }
+  .planet-scene { min-height: 320px; }
+  .hero-copy { max-width: 100%; }
+  .hero-meta { flex-wrap: wrap; }
+  .content { margin-top: 25px; padding: 0 15px; }
+  .question { padding: 20px 16px; }
+  .options { grid-template-columns: 1fr; }
+  .question-title { font-size: 13px; }
+  .question-icon { font-size: 21px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+</style>
+</head>
+
+<body>
+<div class="background" aria-hidden="true">
+  <span>🌿</span><span>♻️</span><span>🍃</span>
+</div>
+
+<nav>
+  <div class="brand">
+    <span class="brand-icon" aria-hidden="true">🌱</span>
+    GREEN PLANET
+  </div>
+  <span class="nav-tag">Một hành tinh • Một tương lai</span>
+</nav>
+
+<header class="hero">
+  <div>
+    <div class="eyebrow">
+      <span class="dot"></span> TIẾNG NÓI CỦA BẠN CÓ Ý NGHĨA
+    </div>
+
+    <h1>Trái Đất xanh.<br><span>Bắt đầu từ bạn.</span></h1>
+
+    <p class="hero-copy">
+      Một thay đổi nhỏ hôm nay, một tương lai xanh ngày mai.
+      Chia sẻ thói quen và suy nghĩ của bạn qua 10 câu hỏi về môi trường.
+    </p>
+
+    <a class="start" href="#survey">
+      Bắt đầu khảo sát <span aria-hidden="true">↗</span>
+    </a>
+
+    <div class="hero-meta">
+      <span>10 câu hỏi</span>
+      <span>Khoảng 3 phút</span>
+      <span>Không cần đăng ký</span>
+    </div>
+  </div>
+
+  <div class="planet-scene" role="img"
+       aria-label="Trái Đất đang xoay với khuôn mặt tươi cười, mây và sticker môi trường">
+    <div class="orbit"></div>
+
+    <div class="planet-wrap">
+      <div class="planet">
+        <!-- Hai bản đồ giống nhau nối tiếp để tạo vòng xoay liên tục -->
+        <svg class="world-map" viewBox="0 0 480 240"
+             xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <defs>
+            <g id="land" fill="#80bc62" stroke="#6aa953" stroke-width="2">
+              <path d="M12 42 34 23 67 26 81 45 68 62 75 78
+                       56 89 47 110 29 95 23 73 9 65Z"/>
+              <path d="M61 117 81 111 98 129 93 154 79 175
+                       70 199 59 186 57 159 48 140Z"/>
+              <path d="M118 48 135 33 162 40 173 27 201 34
+                       225 50 239 72 220 88 201 78 182 98
+                       164 83 149 91 138 70 121 68Z"/>
+              <path d="M132 94 157 91 174 109 166 139 151 160
+                       136 145 125 120Z"/>
+              <path d="M192 161 215 153 233 168 226 185
+                       201 188 186 176Z"/>
+              <path d="M91 12 111 8 117 23 102 33 88 26Z"/>
+            </g>
+          </defs>
+          <use href="#land"/>
+          <use href="#land" x="240"/>
+        </svg>
+        <div class="planet-shine"></div>
+        <div class="face">
+          <span class="eye"></span><span class="eye"></span>
+          <span class="blush left"></span>
+          <span class="blush right"></span>
+          <span class="smile"></span>
+        </div>
+      </div>
+      <div class="planet-label">THERE IS NO PLANET B</div>
+    </div>
+
+    <span class="sticker one" aria-hidden="true">♻️</span>
+    <span class="sticker two" aria-hidden="true">🌱</span>
+    <span class="sticker three" aria-hidden="true">💧</span>
+    <div class="cloud c1"></div>
+    <div class="cloud c2"></div>
+  </div>
+</header>
+
+<main class="content" id="survey">
+  <div class="progress-panel">
+    <div class="progress-top">
+      <span>Hành trình xanh của bạn</span>
+      <span id="progressCount" aria-live="polite">0 / 10 câu</span>
+    </div>
+    <progress id="progress" value="0" max="10"
+              aria-label="Tiến độ hoàn thành khảo sát"></progress>
+  </div>
+
+  <div class="section-heading">
+    <span aria-hidden="true">📝</span>
+    <div>
+      <h2>Lắng nghe bạn, hiểu hành tinh</h2>
+      <p>Chọn một đáp án phù hợp nhất với bạn ở mỗi câu.</p>
+    </div>
+  </div>
+
+  <form id="surveyForm">
+    <div id="questions"></div>
+
+    <div class="bottom-card">
+      <span aria-hidden="true">🌻</span>
+      <h3>Một chút chia sẻ. Thêm nhiều thay đổi.</h3>
+      <p>Cảm ơn bạn đã dành thời gian cho một tương lai xanh hơn.</p>
+      <button class="submit" type="submit">
+        Hoàn thành khảo sát ↗
+      </button>
+      <button class="reset" type="reset">Xóa lựa chọn và làm lại</button>
+    </div>
+
+    <p class="privacy">
+      Đây là bản khảo sát demo. Câu trả lời chỉ được xử lý trên trang,
+      không được gửi hoặc lưu lên máy chủ.
+    </p>
+  </form>
+</main>
+
+<footer>GREEN PLANET · Sống xanh từ những điều nhỏ nhất.</footer>
+
+<dialog id="successDialog" aria-labelledby="successTitle">
+  <div class="success-icon" aria-hidden="true">🌍</div>
+  <h2 id="successTitle">Bạn đã hoàn thành!</h2>
+  <p>
+    Cảm ơn bạn đã trả lời đủ 10 câu hỏi.<br>
+    Hãy chọn một hành động xanh và bắt đầu ngay hôm nay!
+  </p>
+  <button id="closeDialog" type="button">Tiếp tục sống xanh 🌱</button>
+</dialog>
+
+<script>
+const questions = [
+  {
+    icon: "🌍",
+    title: "Bạn quan tâm đến vấn đề môi trường ở mức độ nào?",
+    answers: [
+      "Rất quan tâm",
+      "Khá quan tâm",
+      "Ít quan tâm",
+      "Không quan tâm"
+    ]
+  },
+  {
+    icon: "♻️",
+    title: "Bạn có thường xuyên phân loại rác tại nhà không?",
+    answers: [
+      "Luôn luôn",
+      "Thường xuyên",
+      "Thỉnh thoảng",
+      "Chưa bao giờ"
+    ]
+  },
+  {
+    icon: "🛍️",
+    title: "Bạn sử dụng túi ni lông khi mua sắm với tần suất nào?",
+    answers: [
+      "Mỗi lần mua sắm",
+      "Phần lớn các lần mua sắm",
+      "Hiếm khi",
+      "Không sử dụng"
+    ]
+  },
+  {
+    icon: "🚲",
+    title: "Phương tiện đi lại chính của bạn là gì?",
+    answers: [
+      "Xe máy hoặc ô tô cá nhân",
+      "Phương tiện công cộng",
+      "Xe đạp",
+      "Đi bộ"
+    ]
+  },
+  {
+    icon: "💡",
+    title: "Bạn có tắt thiết bị điện khi không sử dụng không?",
+    answers: [
+      "Luôn luôn",
+      "Thường xuyên",
+      "Thỉnh thoảng",
+      "Chưa bao giờ"
+    ]
+  },
+  {
+    icon: "🧴",
+    title: "Bạn thường làm gì với chai nhựa sau khi sử dụng?",
+    answers: [
+      "Đưa đến điểm hoặc thùng thu gom tái chế",
+      "Tái sử dụng khi phù hợp",
+      "Bỏ chung với rác sinh hoạt",
+      "Xử lý theo cách khác"
+    ]
+  },
+  {
+    icon: "🌳",
+    title: "Vấn đề môi trường nào cần được ưu tiên nhất theo bạn?",
+    answers: [
+      "Ô nhiễm không khí",
+      "Ô nhiễm nguồn nước",
+      "Rác thải nhựa",
+      "Suy giảm rừng và đa dạng sinh học"
+    ]
+  },
+  {
+    icon: "🌱",
+    title: "Bạn tham gia hoạt động bảo vệ môi trường với tần suất nào?",
+    answers: [
+      "Hằng tuần",
+      "Hằng tháng",
+      "Vài lần mỗi năm",
+      "Chưa từng tham gia"
+    ]
+  },
+  {
+    icon: "💚",
+    title: "Bạn sẵn sàng thay đổi thói quen nào nhất để sống xanh?",
+    answers: [
+      "Mang túi và bình nước cá nhân",
+      "Tiết kiệm điện và nước",
+      "Sử dụng phương tiện công cộng",
+      "Phân loại rác tại nguồn"
+    ]
+  },
+  {
+    icon: "☀️",
+    title: "Điều gì sẽ giúp bạn duy trì lối sống xanh hơn?",
+    answers: [
+      "Có hướng dẫn cụ thể, dễ thực hiện",
+      "Có thêm điểm thu gom và tái chế",
+      "Sản phẩm xanh có giá hợp lý",
+      "Gia đình và bạn bè cùng tham gia"
+    ]
+  }
+];
+
+const form = document.getElementById("surveyForm");
+const progress = document.getElementById("progress");
+const progressCount = document.getElementById("progressCount");
+const dialog = document.getElementById("successDialog");
+const letters = ["A", "B", "C", "D"];
+
+document.getElementById("questions").innerHTML =
+  questions.map((question, index) => `
+    <fieldset class="question">
+      <legend>
+        <span class="question-top">
+          <span class="question-number">
+            ${String(index + 1).padStart(2, "0")}
+          </span>
+          <span class="question-title">${question.title}</span>
+          <span class="question-icon" aria-hidden="true">
+            ${question.icon}
+          </span>
+        </span>
+      </legend>
+
+      <div class="options">
+        ${question.answers.map((answer, answerIndex) => `
+          <label class="option">
+            <input
+              type="radio"
+              name="question${index + 1}"
+              value="${answerIndex + 1}"
+              required
+            >
+            <span class="letter" aria-hidden="true">
+              ${letters[answerIndex]}
+            </span>
+            <span class="answer-text">${answer}</span>
+          </label>
+        `).join("")}
+      </div>
+    </fieldset>
+  `).join("");
+
+function updateProgress() {
+  const answered = form.querySelectorAll(
+    'input[type="radio"]:checked'
+  ).length;
+
+  progress.value = answered;
+  progressCount.textContent = `${answered} / ${questions.length} câu`;
+
+  form.querySelectorAll(".question").forEach(question => {
+    question.classList.toggle(
+      "answered",
+      Boolean(question.querySelector("input:checked"))
+    );
+  });
+}
+
+form.addEventListener("change", updateProgress);
+
+// Tự cuộn đến câu chưa trả lời khi trình duyệt báo thiếu.
+form.addEventListener("invalid", event => {
+  const question = event.target.closest(".question");
+
+  if (!form.querySelector(":invalid") ||
+      event.target !== form.querySelector(":invalid")) return;
+
+  question.scrollIntoView({ block: "center", behavior: "smooth" });
+}, true);
+
+form.addEventListener("submit", event => {
+  event.preventDefault();
+  dialog.showModal();
+  celebrate();
+});
+
+form.addEventListener("reset", () => {
+  setTimeout(updateProgress, 0);
+});
+
+document.getElementById("closeDialog").addEventListener("click", () => {
+  dialog.close();
+});
+
+// Tạo hiệu ứng pháo giấy trong hộp thoại.
+function celebrate() {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+  const colors = ["#79b765", "#f3c95e", "#69bfd3", "#e9a38f", "#b8da79"];
+
+  for (let i = 0; i < 55; i++) {
+    const piece = document.createElement("span");
+    piece.className = "confetti";
+    piece.setAttribute("aria-hidden", "true");
+    piece.style.left = `${Math.random() * 100}%`;
+    piece.style.background = colors[i % colors.length];
+    piece.style.animationDelay = `${Math.random() * .6}s`;
+    piece.style.animationDuration = `${2 + Math.random() * 1.5}s`;
+    piece.style.borderRadius = i % 2 ? "50%" : "2px";
+
+    dialog.appendChild(piece);
+    piece.addEventListener("animationend", () => piece.remove());
+  }
+}
+
+dialog.addEventListener("close", () => {
+  dialog.querySelectorAll(".confetti").forEach(piece => piece.remove());
+});
+</script>
+</body>
+</html>
